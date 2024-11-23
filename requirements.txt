@@ -1,0 +1,6 @@
+pygame
+pymunk
+numpy
+torch
+gymnasium
+snntorch
