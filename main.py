@@ -32,9 +32,9 @@ def main():
 
     model = None
 
-    #evaluate_akida()
+    evaluate_akida()
 
-    evaluate_cpu()
+    #evaluate_cpu()
 
 if __name__ == "__main__":
 
