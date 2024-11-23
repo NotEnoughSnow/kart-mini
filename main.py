@@ -16,7 +16,7 @@ def evaluate_cpu():
 
     env = env_factory.createEnv(track_type, track_name, None)
 
-    actor_state = ".\\ppo_actor.pth"
+    actor_state = "./ppo_actor.pth"
 
     evaluator = Eval_module(env, actor_state, "ANN")
 
