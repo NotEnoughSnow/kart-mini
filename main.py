@@ -1,6 +1,6 @@
 
-from core.env.env_factory import EnvFactory
-import core.env.sim.drive_env as base_env
+from core.world.env_factory import EnvFactory
+import core.world.sim.drive_env as base_env
 from core.evaluate_module import Eval_module
 
 
