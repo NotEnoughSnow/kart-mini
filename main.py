@@ -3,9 +3,13 @@ from core.world.env_factory import EnvFactory
 import core.world.sim.drive_env as base_env
 from core.evaluate_module import Eval_module
 
+from akida import load_model
 
 def evaluate_akida():
-    pass
+
+    model_akida = load_model("../akida_models/akida_model.fbz")
+    model_akida.summary()
+
 
 def evaluate_cpu():
     env_name = base_env

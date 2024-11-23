@@ -42,6 +42,9 @@ class Eval_module:
         else:
             act_dim = self.env.action_space.n
 
+        print("obs dim :", obs_dim)
+        print("act dim :", act_dim)
+
         # Build our policy the same way we build our actor model in PPO
         # policy = ActorNetwork(obs_dim, act_dim)
         if NType == "ANN":
