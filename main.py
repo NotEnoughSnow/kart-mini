@@ -60,11 +60,11 @@ def verify_akida():
     model_akida = load_model("../akida_models/SMRE_random.fbz")
 
     device = devices()[0]
-    print(device.version)
     print("device :", device)
+    print("version :", device.version)
+    print("ip version: :", device.ip_version)
 
     # Assuming model_akida is already loaded
-    #device_name = "PCIe/NSoC_v2/0"  # This is the detected Akida device
     model_akida.map(device)
 
     # Optionally, print mapping details
@@ -73,7 +73,11 @@ def verify_akida():
     model_akida.summary()
 
 
+def verify_model():
 
+    model_akida = load_model("../akida_models/SMRE_random.fbz")
+
+    print(model_akida.ip_version)
 
 
 def evaluate_cpu(env):
@@ -98,7 +102,9 @@ def main():
 
     #evaluate_akida(env=env)
 
-    verify_akida()
+    #verify_akida()
+
+    verify_model()
 
     #evaluate_cpu(env=env)
 
