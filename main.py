@@ -3,11 +3,11 @@ from core.world.env_factory import EnvFactory
 import core.world.sim.drive_env as base_env
 from core.evaluate_module import Eval_module
 
-from akida import load_model
+from akida_models.model_io import load_model
 
 def evaluate_akida():
 
-    model_akida = load_model("../akida_models/akida_model.fbz")
+    model_akida = load_model("../akida_models/SMRE_random.fbz")
     model_akida.summary()
 
 
