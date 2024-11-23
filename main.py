@@ -60,7 +60,7 @@ def verify_akida():
 
     # Assuming model_akida is already loaded
     device_name = "PCIe/NSoC_v2/0"  # This is the detected Akida device
-    model_akida.map(device_name=device_name)
+    model_akida.map(device_name)
 
     # Optionally, print mapping details
     print(f"Model mapped to device: {device_name}")
