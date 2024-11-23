@@ -62,7 +62,7 @@ def verify_akida():
     device = devices()[0]
     print("device :", device)
     print("version :", device.version)
-    print("ip version: :", device.ip_version)
+    print("ip version: :", device.version)
 
     print("model ip version: ", model_akida.ip_version)
 
