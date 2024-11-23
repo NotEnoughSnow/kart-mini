@@ -64,6 +64,8 @@ def verify_akida():
     print("version :", device.version)
     print("ip version: :", device.ip_version)
 
+    print("model ip version: ", model_akida.ip_version)
+
     # Assuming model_akida is already loaded
     model_akida.map(device)
 
@@ -71,13 +73,6 @@ def verify_akida():
     print(f"Model mapped to device: {device}")
 
     model_akida.summary()
-
-
-def verify_model():
-
-    model_akida = load_model("../akida_models/SMRE_random.fbz")
-
-    print(model_akida.ip_version)
 
 
 def evaluate_cpu(env):
@@ -102,9 +97,7 @@ def main():
 
     #evaluate_akida(env=env)
 
-    #verify_akida()
-
-    verify_model()
+    verify_akida()
 
     #evaluate_cpu(env=env)
 
