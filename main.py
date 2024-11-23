@@ -10,6 +10,8 @@ import core.snn_utils as SNN_utils
 
 import torch
 
+from akida import devices
+
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
@@ -56,14 +58,20 @@ def evaluate_akida(env):
 def verify_akida():
 
     model_akida = load_model("../akida_models/SMRE_random.fbz")
-    model_akida.summary()
+
+    device = devices()[0]
+    print(device.version)
+    print("device :", device)
 
     # Assuming model_akida is already loaded
-    device_name = "PCIe/NSoC_v2/0"  # This is the detected Akida device
-    model_akida.map(device_name)
+    #device_name = "PCIe/NSoC_v2/0"  # This is the detected Akida device
+    model_akida.map(device)
 
     # Optionally, print mapping details
-    print(f"Model mapped to device: {device_name}")
+    print(f"Model mapped to device: {device}")
+
+    model_akida.summary()
+
 
 
 
