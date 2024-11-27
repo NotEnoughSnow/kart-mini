@@ -1,7 +1,7 @@
 import math
 import random
 import pymunk
-from core.world.maps.map_manager import AbstractMap as abs_map
+from core.sim.maps.map_manager import AbstractMap as abs_map
 
 
 class Cube:

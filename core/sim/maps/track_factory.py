@@ -1,6 +1,6 @@
-from core.world.maps.map_generator import MapGenerator
-from core.world.maps.map_loader import MapLoader
-from core.world.maps.random_point import RandomPoint
+from core.sim.maps.map_generator import MapGenerator
+from core.sim.maps.map_loader import MapLoader
+from core.sim.maps.random_point import RandomPoint
 
 class TrackFactory:
 
@@ -11,15 +11,15 @@ class TrackFactory:
         Creates the appropriate track based on the track type and additional parameters.
 
         Parameters:
-        - track_type: (str) The type of the track (e.g., 'boxes', 'generator', 'random').
+        - track_type: (str) The type of the track
         - space: (object) The physics space object.
         - world_center: (tuple) The center of the world in the environment.
         - initial_pos: (tuple) The initial position for the map loader.
         - track_params: Additional parameters specific to the track type.
         """
 
-        if track_type == "boxes":
-            return MapLoader(track_args.get('boxes_file'),
+        if track_type == "loader":
+            return MapLoader(track_args.get('track_file'),
                              track_args.get('sectors_file'),
                              track_args.get('initial_pos'),
                              track_args.get('rand goal'),

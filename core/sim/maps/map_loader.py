@@ -1,8 +1,8 @@
 import random
 
-from core.world.maps.map_manager import AbstractMap as abs_map
+from core.sim.maps.map_manager import AbstractMap as abs_map
 import pymunk
-import core.world.utils as utils
+import core.sim.utils as utils
 
 
 class MapLoader(abs_map):
@@ -45,7 +45,7 @@ class MapLoader(abs_map):
     def create_walls(self):
         static_body = self.space.static_body
 
-        shapes_arr = utils.readTrackFile("core/world/resources/"+self.track_name)
+        shapes_arr = utils.readTrackFile("core/sim/resources/"+self.track_name)
 
         static_lines = []
 
@@ -65,7 +65,7 @@ class MapLoader(abs_map):
         return static_lines
 
     def create_goals(self, mode):
-        sectors_arr = utils.readTrackFile("core/world/resources/" + self.sector_name)
+        sectors_arr = utils.readTrackFile("core/sim/resources/" + self.sector_name)
 
         # sectors
         sensor_bodies = self.space.static_body

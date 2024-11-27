@@ -1,6 +1,7 @@
 
-from core.world.env_factory import EnvFactory
-import core.world.sim.drive_env as base_env
+from core.env_factory import EnvFactory
+import core.sim.env.steer_env as base_env
+import core.sim.env.grid_env as simple_env
 from core.evaluate_module import Eval_module
 
 from akida_models.model_io import load_model
@@ -33,24 +34,12 @@ def evaluate_akida(env):
         1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
         1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 0.34192791,
         1.07690352, 0.75227227, 0.31401242, 0.94941888, -3.75118563, 0.77804336,
-        0.99765169, 0.06849162
+        0.99765169, 0.06849162,
     ]], dtype=np.float32)
 
-    threshold = torch.tensor(env.high)
-    shift = np.abs(env.low)
+    # ...
 
-    obs_st = SNN_utils.generate_spike_trains(obs,
-                                             num_steps=50,
-                                             threshold=threshold,
-                                             shift=shift)
-
-    obs_st_int = obs_st.astype(np.int8)
-
-    obs_reshaped = obs_st_int.reshape(50, 1, 1, 68)
-
-    print(obs_reshaped.shape)
-
-    logits = model_akida.predict(obs_reshaped)
+    logits = model_akida.predict(obs)
 
     print(logits)
 
@@ -88,7 +77,7 @@ def evaluate_cpu(env):
 def main():
 
     env_name = base_env
-    track_type = "boxes"
+    track_type = "loader"
     track_name = "big_S"
 
     env_factory = EnvFactory(env_name)
@@ -97,9 +86,9 @@ def main():
 
     #evaluate_akida(env=env)
 
-    verify_akida()
+    #verify_akida()
 
-    #evaluate_cpu(env=env)
+    evaluate_cpu(env=env)
 
 if __name__ == "__main__":
 
