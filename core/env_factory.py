@@ -1,7 +1,7 @@
 
 from core.sim.maps.track_factory import TrackFactory
 import core.sim.observation_types as obs_types
-import core.sim.env.grid_env as simple_env
+import core.sim.grid_env as simple_env
 
 
 class EnvFactory:

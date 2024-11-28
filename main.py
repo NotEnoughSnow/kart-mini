@@ -1,15 +1,10 @@
 
 from core.env_factory import EnvFactory
-import core.sim.env.steer_env as base_env
-import core.sim.env.grid_env as simple_env
+import core.sim.steer_env as base_env
 from core.evaluate_module import Eval_module
 
 from akida_models.model_io import load_model
 import numpy as np
-
-import core.snn_utils as SNN_utils
-
-import torch
 
 from akida import devices
 
