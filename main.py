@@ -81,9 +81,9 @@ def main():
 
     #evaluate_akida(env=env)
 
-    #verify_akida()
+    verify_akida()
 
-    evaluate_cpu(env=env)
+    #evaluate_cpu(env=env)
 
 if __name__ == "__main__":
 
