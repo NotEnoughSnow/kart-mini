@@ -41,7 +41,7 @@ def evaluate_akida(env):
 
 def verify_akida():
 
-    model_akida = load_model("../akida_models/SMRE_random.fbz")
+    model_akida = load_model("../akida_models/new.fbz")
 
     device = devices()[0]
     print("device :", device)
