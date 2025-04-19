@@ -2,41 +2,53 @@
 from core.env_factory import EnvFactory
 import core.sim.steer_env as base_env
 from core.evaluate_module import Eval_module
+from torch.distributions import MultivariateNormal, Categorical
 
 from akida_models.model_io import load_model
 import numpy as np
 
 from akida import devices
 
+from core.arguments import get_args
+
+
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
-def evaluate_akida(env):
+def evaluate_akida(env, n_eval_episodes):
 
     model_akida = load_model("../akida_models/SMRE_random.fbz")
     model_akida.summary()
 
-    obs = np.array([[
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667,
-        1.16666667, 1.16666667, 1.16666667, 1.16666667, 1.16666667, 0.34192791,
-        1.07690352, 0.75227227, 0.31401242, 0.94941888, -3.75118563, 0.77804336,
-        0.99765169, 0.06849162,
-    ]], dtype=np.float32)
+    rewards = []
 
-    # ...
+    for episode in range(n_eval_episodes):
+        obs, _ = env.reset(options={})
+        terminated = False
+        truncated = False
+        episode_reward = 0
 
-    logits = model_akida.predict(obs)
 
-    print(logits)
+        while not (terminated or truncated):
+            # Get action from the actor (policy network)
+
+            int_obs = obs.astype(np.int16)
+
+            logits = model_akida.predict(int_obs)
+
+            dist = Categorical(logits=logits)
+            action = dist.sample().detach().numpy()
+
+
+            obs, reward, terminated, truncated, info = env.step(action)
+            episode_reward += reward
+
+        rewards.append(episode_reward)
+        print("reward for this episode :", episode_reward)
+
+    mean_reward = np.mean(rewards)
+    return mean_reward
 
 
 def verify_akida():
@@ -50,10 +62,8 @@ def verify_akida():
 
     print("model ip version: ", model_akida.ip_version)
 
-    # Assuming model_akida is already loaded
     model_akida.map(device)
 
-    # Optionally, print mapping details
     print(f"Model mapped to device: {device}")
 
     model_akida.summary()
@@ -69,7 +79,7 @@ def evaluate_cpu(env):
 
     print("mean_reward :", mean_reward)
 
-def main():
+def main(args):
 
     env_name = base_env
     track_type = "loader"
@@ -79,12 +89,16 @@ def main():
 
     env = env_factory.createEnv(track_type, track_name, None)
 
-    #evaluate_akida(env=env)
-
-    verify_akida()
-
-    #evaluate_cpu(env=env)
+    if args.mode == "verify":
+        print("Verifying akida model")
+        verify_akida()
+    if args.mode == "akida":
+        print("Evaluating on akida")
+        evaluate_akida(env=env, n_eval_episodes=5)
+    if args.mode == "cpu":
+        print("Evaluating on cpu")
+        evaluate_cpu(env=env)
 
 if __name__ == "__main__":
-
-    main()
+    args = get_args()
+    main(args)
